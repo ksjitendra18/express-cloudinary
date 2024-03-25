@@ -3,7 +3,7 @@ import fs from "fs";
 import cloudinary from "cloudinary";
 
 export const register = async (req: Request, res: Response) => {
-  const inputFile = req.file!.path;
+  const inputFile = req.file?.path;
 
   const { name } = req.body;
 
