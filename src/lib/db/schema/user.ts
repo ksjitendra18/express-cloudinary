@@ -8,6 +8,8 @@ import {
 } from "drizzle-orm/sqlite-core";
 import { customAlphabet } from "nanoid";
 import { projects } from "./project";
+import { plans } from "./plans";
+import { purchase } from "./purchase";
 
 const createSessionId = customAlphabet(
   "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz_-",
@@ -25,6 +27,12 @@ export const users = sqliteTable("users", {
   emailVerified: integer("email_verified", { mode: "boolean" })
     .default(false)
     .notNull(),
+  planId: text("plan_id")
+    .references(() => plans.id, {
+      onDelete: "set null",
+      onUpdate: "cascade",
+    })
+    .notNull(),
   isBlocked: integer("is_blocked", { mode: "boolean" }).default(false),
   isDeleted: integer("is_deleted", { mode: "boolean" }).default(false),
   createdAt: text("created_at").default(sql`CURRENT_TIMESTAMP`),
@@ -36,6 +44,11 @@ export const usersRelations = relations(users, ({ many, one }) => ({
   loginLogs: many(loginLogs),
   passwords: one(passwords),
   projects: many(projects),
+  plan: one(plans, {
+    fields: [users.planId],
+    references: [plans.id],
+  }),
+  purchase: many(purchase),
 }));
 
 export const oauthTokens = sqliteTable(

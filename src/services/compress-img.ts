@@ -37,6 +37,8 @@ const compressImgService = async ({
         lower: true,
       }),
       isChild: true,
+      mimeType: `image/${metadata.format}`,
+      dimensions: `${metadata.width}x${metadata.height}`,
       size: compressedImg.byteLength,
       folderId: folderId,
     });
@@ -57,6 +59,8 @@ const compressImgService = async ({
         lower: true,
       }),
       isChild: true,
+      mimeType: `image/${metadata.format}`,
+      dimensions: `${metadata.width}x${metadata.height}`,
       size: compressedImg.byteLength,
       folderId: folderId,
     });
@@ -81,11 +85,14 @@ const compressImgService = async ({
     }),
     isChild: true,
     size: compressedWebp.byteLength,
+    mimeType: `image/${metadata.format}`,
+    dimensions: `${metadata.width}x${metadata.height}`,
     folderId: folderId,
   });
 
   const compressedAvif = await sharp(inputFile)
-    .avif({ lossless: true,  }).resize()
+    .avif({ lossless: true })
+    .resize()
     .toBuffer();
 
   await uploadService({
@@ -103,6 +110,8 @@ const compressImgService = async ({
       lower: true,
     }),
     isChild: true,
+    mimeType: `image/${metadata.format}`,
+    dimensions: `${metadata.width}x${metadata.height}`,
     size: compressedAvif.byteLength,
     folderId: folderId,
   });

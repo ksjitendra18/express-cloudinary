@@ -3,6 +3,7 @@ import { integer, sqliteTable, text, unique } from "drizzle-orm/sqlite-core";
 import { users } from ".";
 import { relations, sql } from "drizzle-orm";
 import { folders } from "./folders";
+import { apiKeys } from "./api-keys";
 
 export const projects = sqliteTable(
   "projects",
@@ -13,6 +14,7 @@ export const projects = sqliteTable(
     name: text("name").notNull(),
     slug: text("slug").notNull(),
     userId: text("user_id").references(() => users.id, { onDelete: "cascade" }),
+    maxUploadLimit: integer("max_upload_limit"),
     isBlocked: integer("is_blocked", { mode: "boolean" }).default(false),
     isDeleted: integer("is_deleted", { mode: "boolean" }).default(false),
     createdAt: text("created_at").default(sql`CURRENT_TIMESTAMP`),
@@ -28,6 +30,7 @@ export const projectRelations = relations(projects, ({ one, many }) => ({
     references: [users.id],
   }),
   folders: many(folders),
+  apiKeys: many(apiKeys),
 }));
 
 export type Project = typeof projects.$inferSelect;

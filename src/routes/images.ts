@@ -7,6 +7,7 @@ import compress from "../controllers/images/compress";
 import download from "../controllers/images/download";
 import uploadImg from "../controllers/images/upload";
 import { createId } from "@paralleldrive/cuid2";
+import downloadAsset from "../controllers/download/asset";
 
 const storage = multer.diskStorage({
   destination: "uploads/",
@@ -28,5 +29,6 @@ const imagesRoutes = Router();
 imagesRoutes.post("/compress", upload.single("image"), compress);
 imagesRoutes.get("/download/:id", download);
 imagesRoutes.post("/upload", upload.single("image"), uploadImg);
+imagesRoutes.post("/download-asset", downloadAsset);
 
 export default imagesRoutes;

@@ -10,6 +10,6 @@ app.use(cors());
 
 app.use("/v1", imagesRoutes);
 
-app.listen(8080, () => {
-  console.log("App running on 8080");
+app.listen(8000, () => {
+  console.log("App running on 8000");
 });

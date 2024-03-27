@@ -17,7 +17,7 @@ export const register = async (req: Request, res: Response) => {
   console.log("input file", inputFile);
 
   try {
-    const cloudinaryRes = await cloudinary.v2.uploader.upload(inputFile);
+    const cloudinaryRes = await cloudinary.v2.uploader.upload(inputFile!);
     console.log("cloudinaryRes", cloudinaryRes);
 
     if (cloudinaryRes && cloudinaryRes.secure_url) {
